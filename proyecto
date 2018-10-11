@@ -4,7 +4,7 @@
 #define pi 3.1415
 using namespace std;
 
-int option=0;
+int option=0;                                                                                        
 void Movimiento_Parabolico();
 void Colisiones_Elasticas();
 void Rebotes();
@@ -46,70 +46,75 @@ int main()
 
 void Movimiento_Parabolico()
 {
-    float y0=0;                          // Posicion inicial en y
-    float v0=0;                          // velocidad inicial lanzamiento (ingresar vel inicial)
-    float alpha=0;                       // angulo (ingresar angulo)
-    float vy=0;                          // Velocidad en x
-    float vx=0;                          // Velocidad en y
-    float x=0;                           // Posicion en X
-    float y=0;                           // Posicion en Y
-    float t=0;                           //tiempo
+  float y0=0;                          // Posicion inicial en y
+  float v0=0;                          // velocidad inicial lanzamiento (ingresar vel inicial)
+  float alpha=0;                       // angulo (ingresar angulo)
+  float vy=0;                          // Velocidad final en x
+  float vx=0;                          // Velocidad final en y
+  float x=0;                           // Posicion en X
+  float y=0;                           // Posicion en Y
+  float t=0;                           // Tiempo
+  float aux=0;                         // Variable auxiliar para tomar muestreos de tiempo
+  cout << "ingrese posicion inicial en y" << endl;
+  cin >> y0;
+  cout << "ingrese angulo" << endl;
+  cin >> alpha;
+  cout << "ingrese velocidad inicial" << endl;
+  cin >> v0;
+  cout << "ingrese tiempo" << endl;
+  cin >> t;
 
-    cout << "ingrese posicion inicial en y" << endl;
-    cin >> y0;
-    cout << "ingrese angulo" << endl;
-    cin >> alpha;
-    cout << "ingrese velocidad inicial" << endl;
-    cin >> v0;
-    cout << "ingrese tiempo" << endl;
-    cin >> t;
+  aux=t;                                               // Almacenamos la variable t en aux para poder hacer t variable en el ciclo for y mostrar posiciones y velocidades en tiempos diferentes
+  t=0;
+  for(int i=0;i<=aux/0.5;i++)                          // IMPORTANTE: En esta linea se divide aux por 0.5 (aux/0.5) para calcular los resultados desde 0 hasta el tiempo definido cada 0.5 segundos
+   {
+    x= v0*cos((alpha*pi)/180)*t;                       // Ecuacion posicion en x                     
+    y= y0+v0*sin((alpha*pi)/180)*t-0.5*g*pow(t,2);     // Ecuacion posicion en y                      
 
+    vx= v0*cos((alpha*pi)/180);                        // Ecuacion para calcular velocidad en x      
+    vy= v0*sin((alpha*pi)/180)-g*t;                    // Ecuacion para calcular velocidad en y     
 
-    x= v0*cos((alpha*pi)/180)*t;         // Ecuacion posicion en x
-    y= y0+v0*sin((alpha*pi)/180)*t-0.5*g*pow(t,2); // Ecuacion posicion en y
+  cout << "la posicion en x para t="<<t<<" es "<<x<< endl;
+  cout << "la posicion en y para t="<<t<<" es "<<y<< endl;
+  cout << "la velocid. en x para t="<<t<<" es "<<vx<< endl;
+  cout << "la velocid. en y para t="<<t<<" es "<<vy<<endl<<endl;
+  t=t+0.5;                                                                                           
 
-    vx= v0*cos((alpha*pi)/180);          // Ecuacion para encpntrar velocidad en x
-    vy= v0*sin((alpha*pi)/180)-g*t;      // Ecuacion para calcular velocidad en y
-
-cout << "la posicion en x es " <<x<< endl;
-cout << "la posicion en y es " <<y<< endl;
-cout << "la velocidad en x es " <<vx<< endl;
-cout << "la velocidad en y es " <<vy<< endl;
+   }
 system("pause");
 
 }
 
+
 void Colisiones_Elasticas()
 {
-    float m1=0;
-    float m2=0;
-    float v0m1=0;
-    float v0m2=0;
-    float vf1=0;
-    float vf2=0;
+  float m1=0;
+  float m2=0;
+  float v0m1=0;
+  float v0m2=0;
+  float vf1=0;
+  float vf2=0;
 
-    cout << "Ingrese el valor de la masa 1" << endl;
-    cin >>m1;
-    cout << "Ingrese el valor de la masa 2" << endl;
-    cin >>m2;
-    cout << "Ingrese la velocidad inicial de la masa 1 " << endl;
-    cin >>v0m1;;
-    cout << "Ingrese la velocidad inicial de la masa 2 " << endl;
-    cin >>v0m2;
+  cout << "Ingrese el valor de la masa 1" << endl;
+  cin >>m1;
+  cout << "Ingrese el valor de la masa 2" << endl;
+  cin >>m2;
+  cout << "Ingrese la velocidad inicial de la masa 1 " << endl;
+  cin >>v0m1;;
+  cout << "Ingrese la velocidad inicial de la masa 2 " << endl;
+  cin >>v0m2;
 
-    if (v0m2==0)
+  if (v0m2==0)                                                                                       
     {
 
-        vf1= ((m1-m2)/(m1+m2))*v0m1; // Ecuacion para calcular la velocidad final de la masa 1
-
-        vf2= ((2*m1)/(m1+m2))*v0m1; // Ecuacion para calcular la velocidad final de la masa 2
+        vf1= ((m1-m2)/(m1+m2))*v0m1;                   // Ecuacion para calcular la velocidad final de la masa 1
+        vf2= ((2*m1)/(m1+m2))*v0m1;                    // Ecuacion para calcular la velocidad final de la masa 2
     }
 
-    else
+  else
     {
-        vf1=((m1-m2)/(m1+m2))*v0m1+((2*m2)/(m1+m2))*v0m2; // Ecuacion para calcular la velocidad final de la masa 1
-
-        vf2=((2*m1)/(m1+m2))*v0m1-((m1-m2)/(m1+m2))*v0m2; // Ecuacion para calcular la velocidad final de la masa 2
+        vf1=((m1-m2)/(m1+m2))*v0m1+((2*m2)/(m1+m2))*v0m2;           // Ecuacion para calcular la velocidad final de la masa 1
+        vf2=((2*m1)/(m1+m2))*v0m1-((m1-m2)/(m1+m2))*v0m2;           // Ecuacion para calcular la velocidad final de la masa 2
 
     }
 
@@ -120,30 +125,104 @@ void Colisiones_Elasticas()
 
 void Rebotes()
 {
-    float m=0;                            // Masa
-    float h=0;                            // Altura inicial
-    float e=0.7;                          // Coeficiente de restitucion
-    float newh=0;                         // Nueva altura (donde sera almacenada la altura luego de cada rebote)
-    float u=0;                            // Velocidad del objeto antes de la colision
-    float v1=0;                           // Velocidad del objeto luego de la colision
-    int count=0;                          // Contador de rebotes (Para saber en que rebote se encuentra)
+  float m=0;                            // Masa
+  float h=0;                            // Altura inicial
+  float e=0.7;                          // Coeficiente de restitucion                                
+  float newh=0;                         // Nueva altura (donde sera almacenada la altura luego de cada rebote)
+  float u=0;                            // Velocidad del objeto antes de la colision
+  float v1=0;                           // Velocidad del objeto luego de la colision
+  int count=0;                          // Contador de rebotes (Para saber en que rebote se encuentra)
 
+  cout << "Ingrese la masa "<< endl;
+  cin >> m;
+  cout << "Ingrese la altura inicial" << endl;
+  cin >>h;
 
-    cout << "Ingrese la masa "<< endl;
-    cin >> m;
-    cout << "Ingrese la altura inicial" << endl;
-    cin >>h;
+  newh=h;
 
-    newh=h;
-    while (newh>0.1)
+  while (newh>0.1)                                                                                    
     {
-       u= sqrt(2*g*h);                    // Calculo de velocidad antes de la colision
+       u= sqrt(2*g*h);                    // Calculo de velocidad antes de la colision             
        v1= e*u;                           // Calculo velocidad despues de la colision
        count++;                           // Contador de rebotes
-       newh= (pow(e,2*count))*h;          // Calculo nueva altura luego del rebote
+       newh= (pow(e,2*count))*h;          // Calculo nueva altura luego del rebote                   
        cout << "REBOTE "<<count<<endl;
        cout << "altura = "<<newh<<endl;
     }
     system("pause");
 
+}
+
+void Friccion_Medio_Viscoso()
+{
+  float y0=0;                          // Posicion inicial en y (sin friccion)
+  float v0=0;                          // velocidad inicial lanzamiento (ingresar vel inicial sin friccion)
+  float alpha=0;                       // angulo (ingresar angulo sin friccion)
+  float vy=0;                          // Velocidad final en x (sin friccion)
+  float vx=0;                          // Velocidad final en y (sin friccion)
+  float x=0;                           // Posicion en x (sin friccion)
+  float y=0;                           // Posicion en y (sin friccion)
+  float t=0;                           // tiempo
+
+  float m=0;                           // Masa
+  float r=0;                           // Radio
+  float k=0;                           // constante de friccion
+  float Vm=0;                          // Magnitud Velocidad (con friccion)
+  float theta=0;                       // Angulo (con friccion)
+  float ax=0;                          // Acelerecion en x (con friccion)
+  float ay=0;                          // Aceleracion en y (con friccion)
+  float X=0;                           // Posicion en X (con friccion)
+  float Y=0;                           // Posicion en Y (con friccion)
+  float vX=0;                          // Velocidad final en X (con friccion)
+  float vY=0;                          // Velocidad final en Y (con friccion)
+  float aux=0;                         // Variable auxiliar
+
+  cout << "ingrese la masa" << endl;
+  cin >> m;
+  cout << "ingrese el radio del cuerpo" << endl;
+  cin >> r;
+  cout << "ingrese el coeficiente de friccion " << endl;
+  cin >> k;
+  cout << "ingrese posicion inicial en y" << endl;
+  cin >> y0;
+  cout << "ingrese angulo de lanzamiento" << endl;
+  cin >> alpha;
+  cout << "ingrese velocidad inicial" << endl;
+  cin >> v0;
+  cout << "ingrese tiempo" << endl;
+  cin >> t;
+
+  aux=t;
+  t=0;
+
+  for(int j=0;j<=aux/0.5;j++)                                                                        
+  {
+      x= v0*cos((alpha*pi)/180)*t;                           // Ecuacion para calcular posicion en x (sin friccion)
+      y= y0+v0*sin((alpha*pi)/180)*t-0.5*g*pow(t,2);         // Ecuacion para calcular posicion en y (sin friccion)
+      vx= v0*cos((alpha*pi)/180);                            // Ecuacion para calcular velocid. en x (sin friccion)
+      vy= v0*sin((alpha*pi)/180)-g*t;                        // Ecuacion para calcular velocid. en y (sin friccion)
+
+      Vm=sqrt(pow(vx,2)+pow(vy,2));                          // Magnitud Velocidad                   
+      theta= atan(vx/vy);                                    // Angulo para aceleraciones             
+
+      ax= -((k*pow(Vm,2)*pow(r,2))/m)*cos(theta*pi/180);     // Ecuacion para calcular aceleracion en x
+      ay= -((k*pow(Vm,2)*pow(r,2))/m)*sin(theta*pi/180)-g;   // Ecuacion para calcular aceleracion en y
+
+      X= v0*cos(alpha*pi/180)*t+(1/2)*ax*pow(t,2);           // Ecuacion para calcular posicion en X (con friccion)
+      Y= y0+v0*sin(alpha*pi/180)*t+(1/2)*ay*pow(t,2);        // Ecuacion para calcular posicion en Y (con friccion)
+
+//////FALTA REVISAR ESTAS 2 ECUACIONES///////////////////////
+      vX= v0*cos(alpha*pi/180)+(ax*t);                       // Ecuacion para calcular velocid. en X (con friccion)
+      vY= v0*sin(alpha*pi/180)+(ay*t);                       // Ecuacion para calcular velocid. en Y (con friccion)
+
+
+      cout<<"La posicion en x para t="<<t<<" es "<<X<<endl;
+      cout<<"La posicion en y para t="<<t<<" es "<<Y<<endl;
+      cout<<"La acelerac en x para t="<<t<<" es "<<ax<<endl;
+      cout<<"La acelerac en y para t="<<t<<" es "<<ay<<endl;
+      cout<<"La velocid  en x para t="<<t<<" es "<<vX<<endl;
+      cout<<"La velocid  en y para t="<<t<<" es "<<vY<<endl<<endl;
+      t=t+0.5;                                                                                                                
+  }
+  system("pause");
 }
