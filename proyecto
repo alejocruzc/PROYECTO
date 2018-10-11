@@ -1,0 +1,149 @@
+#include <iostream>
+#include <math.h>
+#define g 9.8
+#define pi 3.1415
+using namespace std;
+
+int option=0;
+void Movimiento_Parabolico();
+void Colisiones_Elasticas();
+void Rebotes();
+void Friccion_Medio_Viscoso();
+
+
+int main()
+{
+   for(;;)
+     {
+        cout << "--------------------MENU DE CALCULOS--------------------" <<endl<<endl;
+        cout << "   INGRESE 1 PARA CALCULAR MOVIMIENTO PARABOLICO" << endl<<endl;
+        cout << "   INGRESE 2 PARA CALCULAR CHOQUES ELASTICOS" << endl<<endl;
+        cout << "   INGRESE 3 PARA CALCULAR REBOTES"<< endl<<endl;
+        cout << "   INGRESE 4 PARA CALCULAR FRICCION EN MEDIO VISCOSO"<< endl<<endl;
+        cout << "   OPCION: ";
+        cin >> option;
+
+        if (option==1)
+        Movimiento_Parabolico();
+
+        else if (option==2)
+        Colisiones_Elasticas();
+
+        else if (option==3)
+        Rebotes();
+
+        else if (option==4)
+        Friccion_Medio_Viscoso();
+
+        else
+        cout <<"opcion no valida"<<endl;
+
+        system("cls");
+     }
+
+}
+
+
+void Movimiento_Parabolico()
+{
+    float y0=0;                          // Posicion inicial en y
+    float v0=0;                          // velocidad inicial lanzamiento (ingresar vel inicial)
+    float alpha=0;                       // angulo (ingresar angulo)
+    float vy=0;                          // Velocidad en x
+    float vx=0;                          // Velocidad en y
+    float x=0;                           // Posicion en X
+    float y=0;                           // Posicion en Y
+    float t=0;                           //tiempo
+
+    cout << "ingrese posicion inicial en y" << endl;
+    cin >> y0;
+    cout << "ingrese angulo" << endl;
+    cin >> alpha;
+    cout << "ingrese velocidad inicial" << endl;
+    cin >> v0;
+    cout << "ingrese tiempo" << endl;
+    cin >> t;
+
+
+    x= v0*cos((alpha*pi)/180)*t;         // Ecuacion posicion en x
+    y= y0+v0*sin((alpha*pi)/180)*t-0.5*g*pow(t,2); // Ecuacion posicion en y
+
+    vx= v0*cos((alpha*pi)/180);          // Ecuacion para encpntrar velocidad en x
+    vy= v0*sin((alpha*pi)/180)-g*t;      // Ecuacion para calcular velocidad en y
+
+cout << "la posicion en x es " <<x<< endl;
+cout << "la posicion en y es " <<y<< endl;
+cout << "la velocidad en x es " <<vx<< endl;
+cout << "la velocidad en y es " <<vy<< endl;
+system("pause");
+
+}
+
+void Colisiones_Elasticas()
+{
+    float m1=0;
+    float m2=0;
+    float v0m1=0;
+    float v0m2=0;
+    float vf1=0;
+    float vf2=0;
+
+    cout << "Ingrese el valor de la masa 1" << endl;
+    cin >>m1;
+    cout << "Ingrese el valor de la masa 2" << endl;
+    cin >>m2;
+    cout << "Ingrese la velocidad inicial de la masa 1 " << endl;
+    cin >>v0m1;;
+    cout << "Ingrese la velocidad inicial de la masa 2 " << endl;
+    cin >>v0m2;
+
+    if (v0m2==0)
+    {
+
+        vf1= ((m1-m2)/(m1+m2))*v0m1; // Ecuacion para calcular la velocidad final de la masa 1
+
+        vf2= ((2*m1)/(m1+m2))*v0m1; // Ecuacion para calcular la velocidad final de la masa 2
+    }
+
+    else
+    {
+        vf1=((m1-m2)/(m1+m2))*v0m1+((2*m2)/(m1+m2))*v0m2; // Ecuacion para calcular la velocidad final de la masa 1
+
+        vf2=((2*m1)/(m1+m2))*v0m1-((m1-m2)/(m1+m2))*v0m2; // Ecuacion para calcular la velocidad final de la masa 2
+
+    }
+
+     cout << "la velocidad final de la masa 1 es "<<vf1<< endl;
+     cout << "la velocidad final de la masa 2 es "<<vf2<< endl;
+     system("pause");
+}
+
+void Rebotes()
+{
+    float m=0;                            // Masa
+    float h=0;                            // Altura inicial
+    float e=0.7;                          // Coeficiente de restitucion
+    float newh=0;                         // Nueva altura (donde sera almacenada la altura luego de cada rebote)
+    float u=0;                            // Velocidad del objeto antes de la colision
+    float v1=0;                           // Velocidad del objeto luego de la colision
+    int count=0;                          // Contador de rebotes (Para saber en que rebote se encuentra)
+
+
+    cout << "Ingrese la masa "<< endl;
+    cin >> m;
+    cout << "Ingrese la altura inicial" << endl;
+    cin >>h;
+
+    newh=h;
+    while (newh>0.1)
+    {
+       u= sqrt(2*g*h);                    // Calculo de velocidad antes de la colision
+       v1= e*u;                           // Calculo velocidad despues de la colision
+       count++;                           // Contador de rebotes
+       newh= (pow(e,2*count))*h;          // Calculo nueva altura luego del rebote
+       cout << "REBOTE "<<count<<endl;
+       cout << "altura = "<<newh<<endl;
+    }
+    system("pause");
+
+}
